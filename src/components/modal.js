@@ -1,6 +1,9 @@
+const openedPopupSelector = '.popup_is-opened';
+const closeButtonSelector = '.popup__close';
+
 const handleEscKeyUp = (e) => {
   if (e.key === "Escape") {
-      const openedPopup = document.querySelector('.popup_is-opened');
+      const openedPopup = document.querySelector(openedPopupSelector);
       if (openedPopup) {
           closeModal(openedPopup);
       }
@@ -20,8 +23,8 @@ export const closeModal = (modal) => {
 };
 
 export const addPopupListeners = (popupElement) => {
-  const closeButton = popupElement.querySelector('.popup__close');
-  closeButton.addEventListener("click", () => closeModal(popupElement));
+  const profileCloseButton = popupElement.querySelector(closeButtonSelector);
+  profileCloseButton.addEventListener("click", () => closeModal(popupElement));
 
   popupElement.addEventListener("mousedown", (event) => {
       if (event.target.classList.contains('popup')) {
