@@ -53,7 +53,6 @@ export function handleCardLike(cardId, isLiked, likeButton, likeCountElement) {
 
   likeAction
     .then(updatedCard => {
-      // Используем уже переданные элементы likeButton и likeCountElement
       if (likeButton && likeCountElement) {
         likeButton.classList.toggle('card__like-button_is-active', !isLiked);
         likeCountElement.textContent = updatedCard.likes.length;
