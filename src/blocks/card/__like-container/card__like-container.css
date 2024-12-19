@@ -1,0 +1,7 @@
+.card__like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+  gap: 3px; /* Расстояние между лайком и счетчиком */
+  }
