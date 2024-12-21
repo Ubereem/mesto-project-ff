@@ -1,6 +1,4 @@
 import { addLike, removeLike, deleteCard } from './api';
-import { openModal, closeModal } from './modal';
-import { addPopupListeners } from './modal.js';
 
 export function createCard(cardData, handleDelete, handleImageClick, handleCardLike, currentUserId) {
   const cardTemplate = document.querySelector('#card-template').content.cloneNode(true);
@@ -14,8 +12,13 @@ export function createCard(cardData, handleDelete, handleImageClick, handleCardL
   cardImage.alt = cardData.name;
   cardTitle.textContent = cardData.name;
   likeCountElement.textContent = cardData.likes?.length || 0;
-  likeButton.setAttribute('data-id', cardData._id);
-  likeCountElement.setAttribute('data-id', cardData._id);
+
+  if (cardData._id) {
+    likeButton.setAttribute('data-id', cardData._id);
+    likeCountElement.setAttribute('data-id', cardData._id);
+  } else {
+    console.error('Card ID is undefined in cardData:', cardData);
+  }
 
   if (cardData.likes && cardData.likes.some(user => user._id === currentUserId)) {
     likeButton.classList.add('card__like-button_is-active');
@@ -33,12 +36,11 @@ export function createCard(cardData, handleDelete, handleImageClick, handleCardL
     handleCardLike(cardData._id, isLiked, likeButton, likeCountElement);
   });
 
-  setTimeout(() => {
-    updateDeleteButtonVisibility(cardData, currentUserId, cardDeleteButton);
-  }, 10);
+  updateDeleteButtonVisibility(cardData, currentUserId, cardDeleteButton);
 
   return cardTemplate;
 }
+
 
 function updateDeleteButtonVisibility(cardData, currentUserId, cardDeleteButton) {
   if (cardData.owner && cardData.owner._id === currentUserId) {
@@ -62,23 +64,11 @@ export function handleCardLike(cardId, isLiked, likeButton, likeCountElement) {
 }
 
 export function handleCardDelete(cardElement, cardId) {
-  const confirmPopup = document.querySelector('.popup_type_delete');
-  const confirmButton = confirmPopup.querySelector('.popup__button_type_confirm');
-  const closeButton = confirmPopup.querySelector('.popup__close');
-
-  function handleDeleteClick() {
-    deleteCard(cardId)
-      .then(() => {
-        cardElement.remove();
-        closeModal(confirmPopup);
-      })
-      .catch((err) => {
-        console.error('Ошибка при удалении карточки:', err);
-      });
-  }
-
-  confirmButton.removeEventListener('click', handleDeleteClick);
-  confirmButton.addEventListener('click', handleDeleteClick);
-  openModal(confirmPopup);
-  addPopupListeners(confirmPopup);
+  deleteCard(cardId)
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.error('Ошибка при удалении карточки:', err);
+    });
 }

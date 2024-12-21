@@ -2,36 +2,48 @@
   position: relative;
   width: 120px;
   height: 120px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  overflow: hidden;
+}
+
+.profile__image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.profile__image:hover::before {
+  opacity: 1;
 }
 
 .profile__image-edit-icon {
+  cursor: pointer;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
-  width: 30px;
-  height: 30px;
-  background: url('/src/images/update__avatar-icon.svg') no-repeat center;
+  background:transparent url('/src/images/update__avatar-icon.svg') no-repeat center;
   background-size: contain;
-  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
 }
 
 .profile__image:hover .profile__image-edit-icon {
-  display: flex; 
-  justify-content: center;
-  align-items: center;
-}
-
-.profile__image:hover {
-opacity: .2;
+  opacity: 1;
 }
 
 @media screen and (max-width: 740px) {

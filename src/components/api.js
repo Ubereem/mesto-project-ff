@@ -67,14 +67,5 @@ const config = {
     }).then(handleResponse);
   };
   
-  const avatarForm = document.querySelector('.popup__form[name="update-avatar"]');
-  const avatarInput = document.querySelector('#avatar');
-  const popup = document.querySelector('.popup_type_edit-avatar');
-  const closeButton = popup.querySelector('.popup__close');
   
-  function closePopup() {
-    popup.classList.remove('popup_is-opened');
-  }
-  
-  closeButton.addEventListener('click', closePopup);
   
